@@ -1,37 +1,97 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { View, Text } from "react-native";
+import React from "react";
+import { Tabs } from "expo-router";
+import { BlurView } from "expo-blur";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import Bookmark from "../../assets/svg/Bookmark";
+import HomeSvg from "../../assets/svg/HomeSvg";
+import MovieSvg from "../../assets/svg/MovieSvg";
+import SeriesSvg from "../../assets/svg/SeriesSvg";
+import DownloadSvg from "../../assets/svg/DownloadSvg";
+import TrendingSvg from "../../assets/svg/TrendingSvg";
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const Page = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+        tabBarActiveTintColor: "red",
+        tabBarBackground: () => (
+          <BlurView
+            intensity={100}
+            tint={"dark"}
+            style={{
+              flex: 1,
+              backgroundColor: "black",
+            }}
+          />
+        ),
+        tabBarStyle: {
+          backgroundColor: "black", // Set background color to transparent
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          elevation: 0,
+          borderTopWidth: 0,
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          title: "Home",
+          headerShown:false,
+          tabBarIcon: ({ size, color }) => (
+            <HomeSvg height={size} width={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="movies"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          title: "Movies",
+          headerShown:false,
+          tabBarIcon: ({ size, color }) => (
+            <MovieSvg height={size} width={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="series"
+        options={{
+          title: "Series",
+          headerShown:false,
+          tabBarIcon: ({ size, color }) => (
+            <SeriesSvg height={size} width={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="watchlater"
+        options={{
+          title: "Watch Later",
+          headerShown:false,
+          tabBarIcon: ({ size, color }) => (
+            <Bookmark height={size} width={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="download"
+        options={{
+          title: "Downloads",
+          headerShown:false,
+          tabBarIcon: ({ size, color }) => (
+            <DownloadSvg height={size} width={size} color={color} />
           ),
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default Page;
