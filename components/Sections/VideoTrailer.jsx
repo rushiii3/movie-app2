@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React, { useRef } from "react";
 import { FlashList } from "@shopify/flash-list";
 import YoutubePlayer from "react-native-youtube-iframe";
-const VideoTrailer = ({ data }) => {
+const VideoTrailerVideoTrailer = ({ data }) => {
   const playerRef = useRef(null);
 
   const render = ({ item }) => {
