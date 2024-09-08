@@ -8,6 +8,7 @@ import {
   Image,
   Dimensions,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import * as Progress from "react-native-progress";
 import { hp } from "../../common/common";
@@ -20,6 +21,8 @@ import { StatusBar } from "expo-status-bar";
 import { FlashList } from "@shopify/flash-list";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import DeleteSvg from "../../assets/svg/DeleteSvg";
+
+
 
 
 export default function App() {

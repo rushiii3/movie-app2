@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect,  } from "react";
 import {useLocalSearchParams } from "expo-router";
 import useFetch from "../../hooks/useFetch";
 import useBookmarkStore from "../../store/useBookmarkStore";
 import { withLoader } from "../../HOC/withLoader";
 import MovieScreen from "../../components/Screens/MovieScreen";
 const MovieScreenwithLoader = withLoader(MovieScreen);
-
+import { type ErrorBoundaryProps } from 'expo-router';
+import { View, Text } from "react-native";
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return (
+    <View style={{ flex: 1, backgroundColor: "red" }}>
+      <Text>{error.message}</Text>
+      <Text onPress={retry}>Try Again?</Text>
+    </View>
+  );
+}
 const Page = () => {
   const { bookmarks, addBookmark, removeBookmark, loadBookmarks } =
     useBookmarkStore();
@@ -33,6 +42,7 @@ const Page = () => {
     (value) => value?.type === "Teaser" || value?.type === "Trailer"
   );
   const checkBookmark = bookmarks?.find((b) => b?.id === movieid);
+  
   return (
     <MovieScreenwithLoader
       isLoading={movieLoading|| castLoading || teaserLoading || recommendationsLoading}

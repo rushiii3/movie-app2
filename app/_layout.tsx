@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import React, { useEffect } from "react";
 import { Stack, Tabs, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -149,7 +149,16 @@ const InitialLayout = () => {
     </Stack>
   );
 };
+export function ErrorBoundary({ error, retry }) {
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <Text>{error.message}</Text>
+      <Text onPress={retry}>Try Again?</Text>
+    </SafeAreaView>
+  );
+}
 const PageLayout = () => {
+  
   return (
     <QueryClientProvider client={queryClient}>
       <DownloadProvider>
