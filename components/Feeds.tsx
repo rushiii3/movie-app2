@@ -22,7 +22,7 @@ const Feeds = ({title,type,data,url}) => {
           
         }}
       >
-        <Text style={{ fontSize: 30, fontWeight: "bold", color: "white" }}>
+        <Text style={{ fontSize: hp(3), fontWeight: "bold", color: "white" }}>
          {title}
         </Text>
         <TouchableOpacity

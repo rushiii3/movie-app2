@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { Stack, Tabs, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -7,6 +7,8 @@ import { DownloadProvider } from "../Provider/DownloadProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useGenreStore from "../store/useGenre";
 import useFetch from "../hooks/useFetch";
+import Error from "@/components/Error";
+import NetworkProvider from "@/Provider/NetworkProvider";
 const queryClient = new QueryClient();
 const InitialLayout = () => {
   const { movieGenre, setMovieGenre, setShowGenre } = useGenreStore();
@@ -37,7 +39,7 @@ const InitialLayout = () => {
   //   pathname:"/player/[id]"
   // })
   // }, [])
-  
+
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -77,7 +79,6 @@ const InitialLayout = () => {
               </View>
             </TouchableOpacity>
           ),
-
         }}
       />
       <Stack.Screen
@@ -113,7 +114,7 @@ const InitialLayout = () => {
       <Stack.Screen
         name="episodes/[season_id]"
         options={{
-          orientation:"portrait_up",
+          orientation: "portrait_up",
           headerLeft: () => (
             <TouchableOpacity onPress={router.back}>
               <Ionicons name="chevron-back" size={27} color={"white"} />
@@ -131,7 +132,7 @@ const InitialLayout = () => {
       <Stack.Screen
         name="view/[name]"
         options={{
-          orientation:"portrait_up",
+          orientation: "portrait_up",
           headerLeft: () => (
             <TouchableOpacity onPress={router.back}>
               <Ionicons name="arrow-back" size={34} color={"white"} />
@@ -150,22 +151,17 @@ const InitialLayout = () => {
   );
 };
 export function ErrorBoundary({ error, retry }) {
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <Text>{error.message}</Text>
-      <Text onPress={retry}>Try Again?</Text>
-    </SafeAreaView>
-  );
+  return <Error retry={retry} />;
 }
 const PageLayout = () => {
-  
   return (
     <QueryClientProvider client={queryClient}>
       <DownloadProvider>
-        <InitialLayout />
+        <NetworkProvider>
+          <InitialLayout />
+        </NetworkProvider>
       </DownloadProvider>
     </QueryClientProvider>
-
   );
 };
 

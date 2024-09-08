@@ -1,12 +1,7 @@
-import MovieLoader from "@/components/Loader/MovieLoader";
-
-
 export const withLoader = (Component) => {
-  return ({ isLoading, ...props }) => {
+  return ({ isLoading, Loader, ...props }) => {
     if (isLoading) {
-      return (
-        <MovieLoader />
-      );
+      return <Loader />;
     }
     return <Component {...props} />;
   };

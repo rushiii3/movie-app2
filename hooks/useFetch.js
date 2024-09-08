@@ -16,6 +16,7 @@ const useFetch = ({ endpoint, key }) => {
       );
       return response.data;
     },
+    staleTime: 2 * 60 * 1000
   });
 
   return {

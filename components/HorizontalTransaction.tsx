@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, ImageBackground } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { hp, wp } from "../common/common";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,8 +9,8 @@ import useGenreStore from "../store/useGenre";
 const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
 
 const HorizontalTransaction = () => {
-  const {showGenre, movieGenre} = useGenreStore();
-  const router = useRouter()
+  const { showGenre, movieGenre } = useGenreStore();
+  const router = useRouter();
   const sample = [1, 2];
   const urls = [
     "https://api.themoviedb.org/3/trending/all/day?language=en-US",
@@ -40,29 +40,12 @@ const HorizontalTransaction = () => {
     }
 
     return (
-      <TouchableOpacity
+      <View
         style={{
           flex: 1, // Assigning background color based on the index of the item
           borderRadius: 25,
           marginHorizontal: 20,
           position: "relative",
-        }}
-        onPress={() => {
-          if (item?.media_type === "movie") {
-            router.push({
-              pathname: "/movie/[movieid]",
-              params: {
-                movieid: item?.id,
-              },
-            });
-          } else {
-            router.push({
-              pathname: "/shows/[showid]",
-              params: {
-                showid: item?.id,
-              },
-            });
-          }
         }}
       >
         <Image
@@ -99,13 +82,30 @@ const HorizontalTransaction = () => {
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 0.8 }}
         />
-        <View
+        <TouchableOpacity
           style={{
             position: "absolute",
             zIndex: 1,
             bottom: 10,
             left: 10,
             paddingHorizontal: 16,
+          }}
+          onPress={() => {
+            if (item?.media_type === "movie") {
+              router.push({
+                pathname: "/movie/[movieid]",
+                params: {
+                  movieid: item?.id,
+                },
+              });
+            } else {
+              router.push({
+                pathname: "/shows/[showid]",
+                params: {
+                  showid: item?.id,
+                },
+              });
+            }
           }}
         >
           <Text
@@ -128,8 +128,8 @@ const HorizontalTransaction = () => {
           >
             {itemGenres ? itemGenres.join(" | ") : ""}
           </Text>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     );
   };
   return (
@@ -144,7 +144,14 @@ const HorizontalTransaction = () => {
           alignItems: "center",
         }}
       >
-        <Text style={{ fontSize: 30, fontWeight: "bold", color: "white" }}>
+        <Text
+          style={{
+            fontSize: hp(3),
+            fontWeight: "bold",
+            color: "white",
+            marginTop: 10,
+          }}
+        >
           Trending
         </Text>
       </View>

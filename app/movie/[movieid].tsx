@@ -7,6 +7,7 @@ import MovieScreen from "../../components/Screens/MovieScreen";
 const MovieScreenwithLoader = withLoader(MovieScreen);
 import { type ErrorBoundaryProps } from 'expo-router';
 import { View, Text } from "react-native";
+import MovieLoader from "@/components/Loader/MovieLoader";
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
     <View style={{ flex: 1, backgroundColor: "red" }}>
@@ -16,7 +17,7 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   );
 }
 const Page = () => {
-  const { bookmarks, addBookmark, removeBookmark, loadBookmarks } =
+  const { bookmarks, addBookmark, removeBookmark } =
     useBookmarkStore();
   const { movieid } = useLocalSearchParams();
 
@@ -54,6 +55,7 @@ const Page = () => {
       checkBookmark={checkBookmark}
       addBookmark={addBookmark}
       removeBookmark={removeBookmark}
+      Loader={MovieLoader}
     />
   );
 };
