@@ -5,7 +5,7 @@ import { useNetInfo } from "@react-native-community/netinfo";
 const NetworkProvider = ({ children }) => {
   const { isConnected, isInternetReachable } = useNetInfo();
 
-  if (true) {
+  if (false) {
     return children; // Return children directly
   }
 

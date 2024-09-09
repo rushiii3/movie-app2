@@ -2,8 +2,9 @@ import useFetch from "../../hooks/useFetch";
 import { withLoader } from "../../HOC/withLoader";
 import MovieScreen from "../../components/Screens/HomeScreen";
 import HomeScreenLoader from "../../components/Loader/HomeScreenLoader";
-
-const HomeWithLoader = withLoader(MovieScreen);
+import withNetworkCheck from "@/HOC/withNetworkCheck";
+const HomeWithNetworkCheck = withNetworkCheck(MovieScreen)
+const HomeWithLoader = withLoader(HomeWithNetworkCheck);
 const index = () => {
   const urls = [
     "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",

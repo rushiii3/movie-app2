@@ -1,18 +1,11 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
-import {
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
 import Bookmark from "../../assets/svg/Bookmark";
 import HomeSvg from "../../assets/svg/HomeSvg";
 import MovieSvg from "../../assets/svg/MovieSvg";
 import SeriesSvg from "../../assets/svg/SeriesSvg";
 import DownloadSvg from "../../assets/svg/DownloadSvg";
-import TrendingSvg from "../../assets/svg/TrendingSvg";
 
 const Page = () => {
   return (

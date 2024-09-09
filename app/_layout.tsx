@@ -1,14 +1,12 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
-import { Stack, Tabs, useRouter } from "expo-router";
+import { ErrorBoundaryProps, Stack, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-// import Bookmark from "../assets/svg/Bookmark";
 import { DownloadProvider } from "../Provider/DownloadProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useGenreStore from "../store/useGenre";
 import useFetch from "../hooks/useFetch";
 import Error from "@/components/Error";
-import NetworkProvider from "@/Provider/NetworkProvider";
 const queryClient = new QueryClient();
 const InitialLayout = () => {
   const { movieGenre, setMovieGenre, setShowGenre } = useGenreStore();
@@ -150,16 +148,14 @@ const InitialLayout = () => {
     </Stack>
   );
 };
-export function ErrorBoundary({ error, retry }) {
+export function ErrorBoundary({ error, retry }:ErrorBoundaryProps) {
   return <Error retry={retry} />;
 }
 const PageLayout = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <DownloadProvider>
-        <NetworkProvider>
           <InitialLayout />
-        </NetworkProvider>
       </DownloadProvider>
     </QueryClientProvider>
   );
