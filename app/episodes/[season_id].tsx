@@ -23,10 +23,15 @@ const Page = () => {
   });
   const render = ({ item, index }) => {
     return (
-      <Animated.View entering={FadeInDown.duration(600).delay(200*index)} style={styles.productCard}>
+      <Animated.View
+        entering={FadeInDown.duration(600).delay(200 * index)}
+        style={styles.productCard}
+      >
         <Image
           source={{
-            uri: `https://image.tmdb.org/t/p/w1280${item.still_path}`,
+            uri: item.still_path
+              ? `https://image.tmdb.org/t/p/w1280${item.still_path}`
+              : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
           }}
           transition={1000}
           style={styles.productImage}
@@ -78,12 +83,18 @@ const Page = () => {
               paddingRight: 15,
             }}
           >
-            <TouchableOpacity onPress={() => {
-          router.push({ pathname: "/player/[id]", params:{
-            "id":`${showid}?s=${season_id}&e=${item?.episode_number}`,
-            "backdrop":item.still_path
-          } });
-        }}>
+            <TouchableOpacity
+              onPress={() => {
+                router.push({
+                  pathname: "/player/[id]",
+                  params: {
+                    id: `${showid}?s=${season_id}&e=${item?.episode_number}`,
+                    backdrop: item.still_path,
+                    type: "tv",
+                  },
+                });
+              }}
+            >
               <FontAwesome5 name="play" size={18} color="white" />
             </TouchableOpacity>
             <TouchableOpacity>

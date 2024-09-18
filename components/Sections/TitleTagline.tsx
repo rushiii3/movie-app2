@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 
 const TitleTagline = ({title,tagline}) => {
   return (
@@ -33,4 +33,4 @@ const TitleTagline = ({title,tagline}) => {
   );
 };
 
-export default TitleTagline;
+export default memo(TitleTagline);

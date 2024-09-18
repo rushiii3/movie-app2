@@ -8,8 +8,7 @@ import {
 
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import Player from "../../components/Video/Player";
-import useFetchVideoData from '../../hooks/useFetchVideoData';
+import WebView from "react-native-webview";
 
 const Page = () => {
   useEffect(() => {
@@ -20,14 +19,25 @@ const Page = () => {
     }
     setOrientation();
   }, []);
-   const { id, backdrop } = useLocalSearchParams();
-   const { finalURL, error, isLoading,  Streams, Subtitle } = useFetchVideoData(id);
+  const router = useRouter(); 
+   const { id, backdrop, type } = useLocalSearchParams();
+   console.log(id);
    return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <View style={{ flex: 1 }}>
-        <Player isLoading={isLoading} error={error} finalURL={finalURL} backdrop={backdrop} Subtitle={Subtitle} Streams={Streams}/>
-      </View>
+
+      <WebView
+      style={styles.container}
+      originWhitelist={['*']}
+      source={{ uri: `https://vidsrc.cc/v2/embed/${type}/${id}` }}
+      allowsFullscreenVideo={true}
+      startInLoadingState={true}
+      allowsInlineMediaPlayback={true}
+      allowsPictureInPictureMediaPlayback={true}
+      allowsAirPlayForMediaPlayback={true}
+      allowsBackForwardNavigationGestures={true}
+      onTouchCancel={() => {router.back()}}
+    />
     </View>
   );
 };
@@ -35,18 +45,7 @@ const Page = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-  },
-  overlay: {
-    position: "absolute",
-    left: (Dimensions.get("window").width - 108) / 2,
-    top: (Dimensions.get("window").height - 36) / 2,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  controlButton: {
-    padding: 10,
+    backgroundColor: "black",
   },
 });
 

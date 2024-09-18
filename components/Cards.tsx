@@ -33,7 +33,9 @@ const Cards = ({ path, index, type, id }) => {
         <Image
           // sharedTransitionTag={path}
           source={{
-            uri: `https://image.tmdb.org/t/p/w1280${path}`,
+            uri: path
+              ? `https://image.tmdb.org/t/p/w1280${path}`
+              : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
           }}
           transition={1000}
           style={styles.image}

@@ -1,10 +1,10 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 const Seasons = ({ data, showid }) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
-    const router = useRouter();
+  const router = useRouter();
   return (
     <View style={{ marginVertical: 15, gap: 15 }}>
       <View>
@@ -21,11 +21,14 @@ const Seasons = ({ data, showid }) => {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              router.push({ pathname: "/episodes/[season_id]", params:{
-                "season_id" : item?.season_number,
-                "name" : item?.name,
-                "showid" : showid
-              }  });
+              router.push({
+                pathname: "/episodes/[season_id]",
+                params: {
+                  season_id: item?.season_number,
+                  name: item?.name,
+                  showid: showid,
+                },
+              });
             }}
           >
             <View style={{ width: 130 }}>
@@ -39,7 +42,9 @@ const Seasons = ({ data, showid }) => {
               >
                 <Image
                   source={{
-                    uri: `https://image.tmdb.org/t/p/w1280${item.poster_path}`,
+                    uri: item.poster_path
+                      ? `https://image.tmdb.org/t/p/w1280${item.poster_path}`
+                      : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
                   }}
                   transition={1000}
                   style={{
@@ -85,4 +90,4 @@ const Seasons = ({ data, showid }) => {
   );
 };
 
-export default Seasons;
+export default memo(Seasons);

@@ -9,6 +9,7 @@ import useGenreStore from "../store/useGenre";
 const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
 
 const HorizontalTransaction = () => {
+  const FallBackURL = require("../assets/images/fallback.png");
   const { showGenre, movieGenre } = useGenreStore();
   const router = useRouter();
   const sample = [1, 2];
@@ -38,7 +39,6 @@ const HorizontalTransaction = () => {
         });
       }
     }
-
     return (
       <View
         style={{
@@ -50,7 +50,9 @@ const HorizontalTransaction = () => {
       >
         <Image
           source={{
-            uri: `https://www.themoviedb.org/t/p/w1280${item?.backdrop_path}`,
+            uri: item?.backdrop_path
+              ? `https://www.themoviedb.org/t/p/w1280${item?.backdrop_path}`
+              : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
           }}
           transition={1000}
           style={{

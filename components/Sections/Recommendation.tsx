@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import Cards from "../Cards";
 import { FlashList } from "@shopify/flash-list";
 
@@ -21,4 +21,4 @@ const Recommendation = ({data, type}) => {
   );
 };
 
-export default Recommendation;
+export default memo(Recommendation);

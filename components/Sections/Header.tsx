@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { hp, wp } from "../../common/common";
@@ -37,7 +37,9 @@ const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
     <View>
       <Animated.Image
         source={{
-          uri: `https://image.tmdb.org/t/p/w1280${backdrop}`,
+          uri: backdrop
+            ? `https://image.tmdb.org/t/p/w1280${backdrop}`
+            : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
         }}
         transition={1000}
         style={[{ height: hp(55), width: wp(100) }, imageAnimatedStyle]}
@@ -63,24 +65,26 @@ const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 0.8 }}
       />
-        <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w1280${poster}`,
-          }}
-          transition={1000}
-          style={{
-            width: wp(50),
-            height: hp(35),
-            borderRadius: 15,
-            position: "absolute",
-            top: hp(30),
-            left: "25%",
-          }}
-          contentFit="cover"
-          cachePolicy={"memory-disk"}
-          placeholder={blurhash}
-          placeholderContentFit="cover"
-        />
+      <Image
+        source={{
+          uri: poster
+            ? `https://image.tmdb.org/t/p/w1280${poster}`
+            : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
+        }}
+        transition={1000}
+        style={{
+          width: wp(50),
+          height: hp(35),
+          borderRadius: 15,
+          position: "absolute",
+          top: hp(30),
+          left: "25%",
+        }}
+        contentFit="cover"
+        cachePolicy={"memory-disk"}
+        placeholder={blurhash}
+        placeholderContentFit="cover"
+      />
       {isAdult && (
         <View
           style={{
@@ -111,4 +115,4 @@ const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
   );
 };
 
-export default Header;
+export default memo(Header);

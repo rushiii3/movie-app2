@@ -1,12 +1,18 @@
-import {Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, SafeAreaView, TouchableOpacity } from "react-native";
 import React from "react";
 import LottieView from "lottie-react-native";
 import { wp } from "@/common/common";
+import { ErrorBoundaryProps } from "expo-router";
 
-const Error = ({ retry }) => {
+const Error = ({ retry }: ErrorBoundaryProps) => {
   return (
     <SafeAreaView
-      style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor:'black' }}
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "black",
+      }}
     >
       <LottieView
         source={require("../assets/animations/animation.json")}

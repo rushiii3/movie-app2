@@ -2,7 +2,6 @@ import { View, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { ErrorBoundaryProps, Stack, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { DownloadProvider } from "../Provider/DownloadProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useGenreStore from "../store/useGenre";
 import useFetch from "../hooks/useFetch";
@@ -39,7 +38,7 @@ const InitialLayout = () => {
   // }, [])
 
   return (
-    <Stack>
+    <Stack screenOptions={{animation:"slide_from_right"}}>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
         name="(tabs)"
@@ -148,15 +147,13 @@ const InitialLayout = () => {
     </Stack>
   );
 };
-export function ErrorBoundary({ error, retry }:ErrorBoundaryProps) {
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return <Error retry={retry} />;
 }
 const PageLayout = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <DownloadProvider>
-          <InitialLayout />
-      </DownloadProvider>
+      <InitialLayout />
     </QueryClientProvider>
   );
 };

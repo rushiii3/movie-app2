@@ -1,11 +1,11 @@
-import React, { useEffect,  } from "react";
-import {useLocalSearchParams } from "expo-router";
+import React, { useMemo } from "react";
+import { useLocalSearchParams } from "expo-router";
 import useFetch from "../../hooks/useFetch";
 import useBookmarkStore from "../../store/useBookmarkStore";
 import { withLoader } from "../../HOC/withLoader";
 import MovieScreen from "../../components/Screens/MovieScreen";
 const MovieScreenwithLoader = withLoader(MovieScreen);
-import { type ErrorBoundaryProps } from 'expo-router';
+import { type ErrorBoundaryProps } from "expo-router";
 import { View, Text } from "react-native";
 import MovieLoader from "@/components/Loader/MovieLoader";
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
@@ -17,8 +17,7 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   );
 }
 const Page = () => {
-  const { bookmarks, addBookmark, removeBookmark } =
-    useBookmarkStore();
+  const { bookmarks, addBookmark, removeBookmark } = useBookmarkStore();
   const { movieid } = useLocalSearchParams();
 
   const { data: moviedata, isLoading: movieLoading } = useFetch({
@@ -39,14 +38,28 @@ const Page = () => {
       key: movieid + "recommendations",
     }
   );
-  const teasersData = teasers?.results.filter(
-    (value) => value?.type === "Teaser" || value?.type === "Trailer"
+  const checkBookmark = useMemo(
+    () => bookmarks?.find((b) => b?.id === movieid),
+    [bookmarks]
   );
-  const checkBookmark = bookmarks?.find((b) => b?.id === movieid);
+  const teasersData = useMemo(
+    () =>
+      teasers?.results.filter(
+        (value) => value?.type === "Teaser" || value?.type === "Trailer"
+      ),
+    [movieid]
+  );
+  console.log("Loadeddd");
+  const isLoading = useMemo(() => 
+    movieLoading || castLoading || teaserLoading || recommendationsLoading, 
+    [movieLoading, castLoading, teaserLoading, recommendationsLoading]
+  );
   
   return (
     <MovieScreenwithLoader
-      isLoading={movieLoading|| castLoading || teaserLoading || recommendationsLoading}
+      isLoading={
+        isLoading
+      }
       moviedata={moviedata}
       recommendations={recommendations}
       cast={cast}

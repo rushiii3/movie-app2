@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 const convertMinutesToHoursAndMinutes = (totalMinutes) => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
@@ -53,4 +53,4 @@ const ShortInfo = ({ duration, status, languages, release_date }) => {
   );
 };
 
-export default ShortInfo;
+export default memo(ShortInfo);

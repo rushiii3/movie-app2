@@ -73,16 +73,6 @@ const Page = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="download"
-        options={{
-          title: "Downloads",
-          headerShown:false,
-          tabBarIcon: ({ size, color }) => (
-            <DownloadSvg height={size} width={size} color={color} />
-          ),
-        }}
-      />
     </Tabs>
   );
 };

@@ -16,7 +16,10 @@ const useFetch = ({ endpoint, key }) => {
       );
       return response.data;
     },
-    staleTime: 2 * 60 * 1000
+    staleTime: 2 * 60 * 1000,
+    enabled: !!key, // only run the query if movieid exists
+    cacheTime: 10 * 60 * 1000, // keep data in cache for 10 minutes
+
   });
 
   return {
