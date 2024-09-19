@@ -9,6 +9,8 @@ import Animated, {
 } from "react-native-reanimated";
 
 const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
+  console.log("render header");
+
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   const IMG_HEIGHT = hp(55);
   const imageAnimatedStyle = useAnimatedStyle(() => {

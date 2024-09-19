@@ -4,6 +4,7 @@ import { FlashList } from "@shopify/flash-list";
 import YoutubePlayer from "react-native-youtube-iframe";
 const VideoTrailer = ({ data }) => {
   const playerRef = useRef(null);
+  console.log("render trailer");
 
   const render = ({ item }) => {
     return (

@@ -1,9 +1,10 @@
 import { View, Text, FlatList } from "react-native";
 import React, { memo } from "react";
-import { FlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 const Cast = ({ data }) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
+  console.log("render cast");
+  
   return (
     data.length>0 && (
       <View style={{ marginVertical: 15, gap: 15, flex: 1 }}>

@@ -8,6 +8,7 @@ const MovieScreenwithLoader = withLoader(MovieScreen);
 import { type ErrorBoundaryProps } from "expo-router";
 import { View, Text } from "react-native";
 import MovieLoader from "@/components/Loader/MovieLoader";
+
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
     <View style={{ flex: 1, backgroundColor: "red" }}>
@@ -19,19 +20,21 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 const Page = () => {
   const { bookmarks, addBookmark, removeBookmark } = useBookmarkStore();
   const { movieid } = useLocalSearchParams();
-
   const { data: moviedata, isLoading: movieLoading } = useFetch({
     endpoint: `https://api.themoviedb.org/3/movie/${movieid}`,
     key: movieid + "movie",
   });
+
   const { data: cast, isLoading: castLoading } = useFetch({
     endpoint: `https://api.themoviedb.org/3/movie/${movieid}/credits?language=en-US`,
     key: movieid + "cast",
   });
+
   const { data: teasers, isLoading: teaserLoading } = useFetch({
     endpoint: `https://api.themoviedb.org/3/movie/${movieid}/videos?language=en-US`,
     key: movieid + "teasers",
   });
+
   const { data: recommendations, isLoading: recommendationsLoading } = useFetch(
     {
       endpoint: `https://api.themoviedb.org/3/movie/${movieid}/recommendations?language=en-US&page=1`,
@@ -49,17 +52,15 @@ const Page = () => {
       ),
     [movieid]
   );
-  console.log("Loadeddd");
-  const isLoading = useMemo(() => 
-    movieLoading || castLoading || teaserLoading || recommendationsLoading, 
+  const isLoading = useMemo(
+    () =>
+      movieLoading || castLoading || teaserLoading || recommendationsLoading,
     [movieLoading, castLoading, teaserLoading, recommendationsLoading]
   );
-  
+
   return (
     <MovieScreenwithLoader
-      isLoading={
-        isLoading
-      }
+      isLoading={isLoading}
       moviedata={moviedata}
       recommendations={recommendations}
       cast={cast}

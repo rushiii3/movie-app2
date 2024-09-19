@@ -2,6 +2,8 @@ import { View, Text, FlatList } from "react-native";
 import React, { memo } from "react";
 
 const Genre = ({ data }) => {
+  console.log("render genre");
+
   return (
     data.length > 0 && (
       <View style={{ marginVertical: 15, flex: 1, alignItems: "center" }}>
