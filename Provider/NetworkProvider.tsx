@@ -1,15 +1,25 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import NoInternet from "@/components/NoInternet";
-import { useNetInfo } from "@react-native-community/netinfo";
+import NetInfo from "@react-native-community/netinfo";
 
 const NetworkProvider = ({ children }) => {
-  const { isConnected, isInternetReachable } = useNetInfo();
+  const [IsNotConnected, setIsNotConnected] = useState(false);
+  useEffect(() => {
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      if (state.isInternetReachable !==null) {
+        const offline = !(state.isConnected && state.isInternetReachable);
+        console.log(offline);
+        setIsNotConnected(offline);
+      }
+    });
+    return () => removeNetInfoSubscription();
+  }, [IsNotConnected]);
 
-  if (false) {
-    return children; // Return children directly
+  if (IsNotConnected) {
+    return <NoInternet />;
   }
 
-  return <NoInternet />; // Return NoInternet component if not connected
+  return children;
 };
 
 export default NetworkProvider;

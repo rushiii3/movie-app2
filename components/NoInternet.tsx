@@ -7,10 +7,11 @@ import {
 import React from "react";
 import LottieView from "lottie-react-native";
 import { wp } from "@/common/common";
-import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import NetInfo from "@react-native-community/netinfo";
 
 const NoInternet = () => {
-  const router = useRouter();
+  
   return (
     <SafeAreaView
       style={{
@@ -20,6 +21,7 @@ const NoInternet = () => {
         backgroundColor: "black",
       }}
     >
+      <StatusBar style="light" />
       <LottieView
         source={require("../assets/animations/NoInternet.json")}
         style={{ width: "100%", aspectRatio: 1 }}
@@ -35,7 +37,8 @@ const NoInternet = () => {
           borderRadius: 15,
         }}
         onPress={() => {
-          router.replace("/download");
+          NetInfo.fetch().then((netinfo)=> console.log(netinfo)
+          )
         }}
       >
         <Text
@@ -46,7 +49,7 @@ const NoInternet = () => {
             fontWeight: "700",
           }}
         >
-          Go to Downloads
+          Refresh
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

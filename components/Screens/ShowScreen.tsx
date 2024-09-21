@@ -21,20 +21,19 @@ import Bookmark from "../../assets/svg/Bookmark";
 import BookmarkFill from "../../assets/svg/BookmarFill";
 import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/reanimated2/component/ScrollView";
 const ShowScreen = ({
-    handleBookmark,
-    checkBookmark,
-    teasersData,
-    recommendations,
-    cast,
-    showdata,
-    removeBookmark,
-    showid
+  handleBookmark,
+  checkBookmark,
+  teasersData,
+  recommendations,
+  cast,
+  showdata,
+  removeBookmark,
+  showid,
 }) => {
-
   const insets = useSafeAreaInsets();
   const scrollViewRef = useAnimatedRef<AnimatedScrollView>();
   const scrollOffset = useScrollViewOffset(scrollViewRef);
-  
+
   return (
     <Animated.ScrollView
       style={{ flex: 1, backgroundColor: "black" }}
@@ -111,18 +110,11 @@ const ShowScreen = ({
           {/* Seasons */}
           <Seasons data={showdata?.seasons} showid={showid} />
           {/* cast */}
-          {cast?.length !== 0 || cast?.cast?.length !== 0 ? (
-            <Cast data={cast?.cast ? cast?.cast : cast?.cast?.cast} />
-          ) : null}
+          <Cast data={cast?.cast ? cast?.cast : cast?.cast?.cast} />
           {/* Videos & Trailers */}
-          {teasersData?.length !== 0 && (
-            <VideoTrailer data={teasersData} />
-          )}
+          <VideoTrailer data={teasersData} />
           {/*  Recommendations */}
-          <Recommendation
-            data={recommendations?.results}
-            type={"shows"}
-          />
+          <Recommendation data={recommendations?.results} type={"shows"} />
         </View>
       </View>
     </Animated.ScrollView>

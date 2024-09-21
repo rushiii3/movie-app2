@@ -6,9 +6,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useGenreStore from "../store/useGenre";
 import useFetch from "../hooks/useFetch";
 import Error from "@/components/Error";
+import NetworkProvider from "@/Provider/NetworkProvider";
+
 const queryClient = new QueryClient();
 const InitialLayout = () => {
-  const { movieGenre, setMovieGenre, setShowGenre } = useGenreStore();
+  const {setMovieGenre, setShowGenre } = useGenreStore();
   const router = useRouter();
   const movieGenresResponse = useFetch({
     endpoint: "https://api.themoviedb.org/3/genre/movie/list?language=en",
@@ -31,12 +33,6 @@ const InitialLayout = () => {
       setShowGenre(showGenresResponse.data);
     }
   }, [showGenresResponse.data]);
-  // useEffect(() => {
-  // router.push({
-  //   pathname:"/player/[id]"
-  // })
-  // }, [])
-
   return (
     <Stack screenOptions={{animation:"slide_from_right"}}>
       <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -147,14 +143,16 @@ const InitialLayout = () => {
     </Stack>
   );
 };
-export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
-  return <Error retry={retry} />;
+export function ErrorBoundary({ retry }: ErrorBoundaryProps) {
+  return <Error retry={retry}  />;
 }
 const PageLayout = () => {
   return (
+    <NetworkProvider>
     <QueryClientProvider client={queryClient}>
       <InitialLayout />
     </QueryClientProvider>
+    </NetworkProvider>
   );
 };
 

@@ -5,7 +5,6 @@ import Bookmark from "../../assets/svg/Bookmark";
 import HomeSvg from "../../assets/svg/HomeSvg";
 import MovieSvg from "../../assets/svg/MovieSvg";
 import SeriesSvg from "../../assets/svg/SeriesSvg";
-import DownloadSvg from "../../assets/svg/DownloadSvg";
 
 const Page = () => {
   return (

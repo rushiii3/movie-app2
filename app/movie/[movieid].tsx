@@ -8,6 +8,7 @@ const MovieScreenwithLoader = withLoader(MovieScreen);
 import { type ErrorBoundaryProps } from "expo-router";
 import { View, Text } from "react-native";
 import MovieLoader from "@/components/Loader/MovieLoader";
+import { Trailers, TrailersResult } from "@/types";
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
@@ -48,7 +49,8 @@ const Page = () => {
   const teasersData = useMemo(
     () =>
       teasers?.results.filter(
-        (value) => value?.type === "Teaser" || value?.type === "Trailer"
+        (value: TrailersResult) =>
+          value?.type === "Teaser" || value?.type === "Trailer"
       ),
     [movieid]
   );
