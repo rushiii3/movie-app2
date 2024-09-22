@@ -7,6 +7,9 @@ import Header from "@/components/Header";
 import { useList } from "@/hooks/useList";
 import ListViewLoader from "@/components/Loader/ListViewLoader";
 import FlashListColumn from "@/components/FlashListColumn";
+import { withLoader } from "@/HOC/withLoader";
+const ShowsWithLoader = withLoader(FlashListColumn);
+
 const Page = () => {
   const { showGenre } = useGenreStore();
   const insets = useSafeAreaInsets();
@@ -15,7 +18,6 @@ const Page = () => {
     genresWithSelection,
     handleEndReached,
     isLoading,
-    searchPhrase,
     setGenresWithSelection,
     setSearchPhrase,
   } = useList(showGenre, "shows");
@@ -32,19 +34,16 @@ const Page = () => {
       <Header
         title="Shows"
         setSearchPhrase={setSearchPhrase}
-        searchPhrase={searchPhrase}
         setGenresWithSelection={setGenresWithSelection}
         genresWithSelection={genresWithSelection}
       />
-      {isLoading ? (
-        <ListViewLoader />
-      ) : (
-        <FlashListColumn
-          data={data?.pages.flatMap((page) => page.results)}
-          handleEndReached={handleEndReached}
-          type={"shows"}
-        />
-      )}
+      <ShowsWithLoader
+        isLoading={isLoading}
+        Loader={ListViewLoader}
+        data={data?.pages.flatMap((page) => page.results)}
+        handleEndReached={handleEndReached}
+        type={"shows"}
+      />
     </View>
   );
 };

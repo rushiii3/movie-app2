@@ -7,7 +7,9 @@ import { useList } from "@/hooks/useList";
 import Header from "@/components/Header";
 import useGenreStore from "@/store/useGenre";
 import FlashListColumn from "@/components/FlashListColumn";
+import { withLoader } from "@/HOC/withLoader";
 
+const MoviesWithLoader = withLoader(FlashListColumn);
 const Page = () => {
   const insets = useSafeAreaInsets();
   const { movieGenre } = useGenreStore();
@@ -35,15 +37,13 @@ const Page = () => {
         setGenresWithSelection={setGenresWithSelection}
         genresWithSelection={genresWithSelection}
       />
-      {isLoading ? (
-        <ListViewLoader />
-      ) : (
-        <FlashListColumn
-          data={data?.pages.flatMap((page) => page.results)}
-          handleEndReached={handleEndReached}
-          type={"movie"}
-        />
-      )}
+      <MoviesWithLoader
+        isLoading={isLoading}
+        Loader={ListViewLoader}
+        data={data?.pages.flatMap((page) => page.results)}
+        handleEndReached={handleEndReached}
+        type={"movie"}
+      />
     </View>
   );
 };

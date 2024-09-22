@@ -20,8 +20,25 @@ import Seasons from "../../components/Sections/Seasons";
 import Bookmark from "../../assets/svg/Bookmark";
 import BookmarkFill from "../../assets/svg/BookmarFill";
 import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/reanimated2/component/ScrollView";
+import { Casts, Recommentations, Shows, TrailersResult } from "@/types";
+
+interface ShowScreenProps {
+  showdata: Shows;
+  recommendations: Recommentations;
+  cast: Casts;
+  teasersData: TrailersResult[];
+  showid: number;
+  checkBookmark: boolean;
+  addBookmark: (bookmark: {
+    id: number;
+    poster_path: string;
+    type: "movie" | "shows";
+  }) => void;
+  removeBookmark: (movieid: number) => void;
+}
+
 const ShowScreen = ({
-  handleBookmark,
+  addBookmark,
   checkBookmark,
   teasersData,
   recommendations,
@@ -29,11 +46,10 @@ const ShowScreen = ({
   showdata,
   removeBookmark,
   showid,
-}) => {
+}: ShowScreenProps) => {
   const insets = useSafeAreaInsets();
   const scrollViewRef = useAnimatedRef<AnimatedScrollView>();
-  const scrollOffset = useScrollViewOffset(scrollViewRef);
-
+  const scrollOffset = useScrollViewOffset(scrollViewRef);  
   return (
     <Animated.ScrollView
       style={{ flex: 1, backgroundColor: "black" }}
@@ -45,7 +61,13 @@ const ShowScreen = ({
           headerRight: () =>
             !checkBookmark ? (
               <TouchableOpacity
-                onPress={handleBookmark}
+                onPress={() => {
+                  addBookmark({
+                    id: showid,
+                    poster_path: showdata?.poster_path,
+                    type: "shows",
+                  });
+                }}
                 style={{ marginRight: "auto" }}
               >
                 <View
@@ -110,7 +132,7 @@ const ShowScreen = ({
           {/* Seasons */}
           <Seasons data={showdata?.seasons} showid={showid} />
           {/* cast */}
-          <Cast data={cast?.cast ? cast?.cast : cast?.cast?.cast} />
+          <Cast data={cast?.cast} />
           {/* Videos & Trailers */}
           <VideoTrailer data={teasersData} />
           {/*  Recommendations */}

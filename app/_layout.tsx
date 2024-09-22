@@ -143,8 +143,8 @@ const InitialLayout = () => {
     </Stack>
   );
 };
-export function ErrorBoundary({ retry }: ErrorBoundaryProps) {
-  return <Error retry={retry}  />;
+export function ErrorBoundary({ retry, error }: ErrorBoundaryProps) {
+  return <Error retry={retry} error={error}  />;
 }
 const PageLayout = () => {
   return (

@@ -1,7 +1,10 @@
 import { View, Text } from "react-native";
-import React, { memo } from "react";
-
-const TitleTagline = ({title,tagline}) => {
+import React, { FC, memo } from "react";
+interface TitleTaglineProps {
+  title: string;
+  tagline: string;
+}
+const TitleTagline: FC<TitleTaglineProps> = ({ title, tagline }) => {
   return (
     <View>
       <Text
@@ -14,21 +17,19 @@ const TitleTagline = ({title,tagline}) => {
       >
         {title}
       </Text>
-      {
-        tagline && 
+      {tagline && (
         <Text
-        style={{
-          color: "white",
-          fontWeight: "200",
-          fontSize: 17,
-          textAlign: "center",
-          fontStyle: "italic",
-        }}
-      >
-        {tagline}
-      </Text>
-      }
-      
+          style={{
+            color: "white",
+            fontWeight: "200",
+            fontSize: 17,
+            textAlign: "center",
+            fontStyle: "italic",
+          }}
+        >
+          {tagline}
+        </Text>
+      )}
     </View>
   );
 };

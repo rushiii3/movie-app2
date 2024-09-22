@@ -1,9 +1,4 @@
-import {
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 import Bookmark from "@/assets/svg/Bookmark";
@@ -22,7 +17,22 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAnimatedRef, useScrollViewOffset } from "react-native-reanimated";
 import { hp } from "@/common/common";
 import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/reanimated2/component/ScrollView";
+import { Casts, Movie, Recommentations, TrailersResult } from "@/types";
 
+interface MovieScreenProps {
+  moviedata: Movie;
+  recommendations: Recommentations;
+  cast: Casts;
+  teasersData: TrailersResult[];
+  movieid: number;
+  checkBookmark: boolean;
+  addBookmark: (bookmark: {
+    id: number;
+    poster_path: string;
+    type: "movie";
+  }) => void;
+  removeBookmark: (movieid: number) => void;
+}
 const MovieScreen = ({
   moviedata,
   recommendations,
@@ -32,7 +42,7 @@ const MovieScreen = ({
   checkBookmark,
   addBookmark,
   removeBookmark,
-}) => {
+}: MovieScreenProps) => {  
   const insets = useSafeAreaInsets();
   const scrollViewRef = useAnimatedRef<AnimatedScrollView>();
   const scrollOffset = useScrollViewOffset(scrollViewRef);

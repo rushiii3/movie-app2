@@ -1,11 +1,11 @@
-import { Dimensions, Text, View, ListRenderItemInfo } from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import React from "react";
-import { FlashList } from "@shopify/flash-list";
-import SamllCards from "./SamllCards";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { hp } from "@/common/common";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Cards from "./Cards";
 
-interface Data {
+type Data = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -20,37 +20,42 @@ interface Data {
   video: boolean;
   vote_average: number;
   vote_count: number;
-}
+};
 
-type FlashListColumsProps = {
-  data: Data;
+type FlashListColumnProps = {
+  data: Data[];
   handleEndReached: () => void;
   type: "movie" | "shows";
 };
 
-type RenderItemProps = {
-  item: ListRenderItemInfo<Data>;
-  index: number;
-};
-const FlashListColumn = ({
+const FlashListColumn: React.FC<FlashListColumnProps> = ({
   data,
   handleEndReached,
   type,
-}: FlashListColumsProps) => {
+}) => {
   const insets = useSafeAreaInsets();
+
+  const renderItem = ({ item, index }: ListRenderItemInfo<Data>) => (
+    <Cards
+      type={type}
+      index={index}
+      path={item.backdrop_path}
+      cardType="small"
+      id={item.id}
+    />
+  );
+
   return (
     <FlashList
       showsVerticalScrollIndicator={false}
       data={data}
       numColumns={2}
-      automaticallyAdjustContentInsets={true}
+      automaticallyAdjustContentInsets
       contentContainerStyle={{
         paddingBottom: insets.bottom + 20,
         paddingTop: 10,
       }}
-      renderItem={({ item, index }: RenderItemProps) => (
-        <SamllCards item={item} type={type} index={index} />
-      )}
+      renderItem={renderItem}
       contentInsetAdjustmentBehavior="always"
       estimatedItemSize={Dimensions.get("window").height}
       onEndReached={handleEndReached}
@@ -75,9 +80,8 @@ const FlashListColumn = ({
               textAlign: "center",
             }}
           >
-            {/* {searchPhrase
-              ? "No movies match your search."
-              : "No movies match the selected genre."} */}
+            {/* Uncomment and provide condition */}
+            {/* {searchPhrase ? "No movies match your search." : "No movies match the selected genre."} */}
           </Text>
           <Text
             style={{
@@ -87,9 +91,8 @@ const FlashListColumn = ({
               textAlign: "center",
             }}
           >
-            {/* {searchPhrase
-              ? "Please try different keywords."
-              : "Please explore other genres or refine your selection."} */}
+            {/* Uncomment and provide condition */}
+            {/* {searchPhrase ? "Please try different keywords." : "Please explore other genres or refine your selection."} */}
           </Text>
         </View>
       }

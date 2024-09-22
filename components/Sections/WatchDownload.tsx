@@ -1,8 +1,12 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { useRouter } from "expo-router";
 import { hp } from "../../common/common";
-const WatchDownload = ({ id, backdrop }) => {
+interface WatchDownloadProps {
+  id: number;
+  backdrop: string;
+}
+const WatchDownload: FC<WatchDownloadProps> = ({ id, backdrop }) => {
   const router = useRouter();
   return (
     <View style={{ marginVertical: 15, gap: 15 }}>

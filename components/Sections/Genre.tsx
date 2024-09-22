@@ -1,9 +1,11 @@
-import { View, Text, FlatList } from "react-native";
-import React, { memo } from "react";
+import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
+import React, { FC, memo } from "react";
+import { Genre as GenrePropss } from "@/types";
 
-const Genre = ({ data }) => {
-  console.log("render genre");
-
+interface GenreProps {
+  data: GenrePropss[];
+}
+const Genre: FC<GenreProps> = ({ data }) => {
   return (
     data.length > 0 && (
       <View style={{ marginVertical: 15, flex: 1, alignItems: "center" }}>
@@ -13,7 +15,7 @@ const Genre = ({ data }) => {
           showsHorizontalScrollIndicator={false}
           alwaysBounceHorizontal={true}
           contentContainerStyle={{ columnGap: 15 }}
-          renderItem={({ item }) => (
+          renderItem={({ item }: ListRenderItemInfo<GenrePropss>) => (
             <View
               style={{
                 borderWidth: 1,
@@ -29,7 +31,7 @@ const Genre = ({ data }) => {
               </Text>
             </View>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
         />
       </View>
     )

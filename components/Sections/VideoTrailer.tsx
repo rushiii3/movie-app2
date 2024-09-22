@@ -1,12 +1,14 @@
 import { View, Text } from "react-native";
-import React, { memo, useRef } from "react";
-import { FlashList } from "@shopify/flash-list";
+import React, { FC, memo, useRef } from "react";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import YoutubePlayer from "react-native-youtube-iframe";
-const VideoTrailer = ({ data }) => {
+import { TrailersResult } from "@/types";
+interface VideoTrailerProps {
+  data: TrailersResult[] | [];
+}
+const VideoTrailer: FC<VideoTrailerProps> = ({ data }) => {
   const playerRef = useRef(null);
-  console.log("render trailer");
-
-  const render = ({ item }) => {
+  const render = ({ item }: ListRenderItemInfo<TrailersResult>) => {
     return (
       <View
         style={{

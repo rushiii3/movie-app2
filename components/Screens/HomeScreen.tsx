@@ -4,6 +4,25 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import HorizontalTransaction from "../HorizontalTransaction";
 import Feeds from "../Feeds";
+import {
+  NowPlayingMovies,
+  NowPlayingShows,
+  PopularMovies,
+  PopularShows,
+  TopRatedMovies,
+  TopRatedShows,
+  Trending,
+} from "@/types";
+interface HomeScreenProps {
+  urls: string[];
+  nowPlayingMovies: NowPlayingMovies;
+  nowPlayingShows: NowPlayingShows;
+  popularMovies: PopularMovies;
+  popularShows: PopularShows;
+  topRatedMovies: TopRatedMovies;
+  topRatedShows: TopRatedShows;
+  trendings: Trending
+}
 const HomeScreen = ({
   urls,
   nowPlayingMovies,
@@ -12,7 +31,8 @@ const HomeScreen = ({
   popularShows,
   topRatedMovies,
   topRatedShows,
-}) => {
+  trendings,
+}: HomeScreenProps) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -27,7 +47,7 @@ const HomeScreen = ({
       >
         <StatusBar hidden={false} style="light" />
         {/* trending */}
-        <HorizontalTransaction />
+        <HorizontalTransaction data={trendings} />
         {/* now playing movies */}
         <Feeds
           title={"Now Playing Movies"}
@@ -77,5 +97,3 @@ const HomeScreen = ({
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({});

@@ -7,12 +7,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import FlashListColumn from "@/components/FlashListColumn";
 import ListViewLoader from "@/components/Loader/ListViewLoader";
+import { withLoader } from "@/HOC/withLoader";
+const ViewsWithLoader = withLoader(FlashListColumn);
 const Page = () => {
-  const { name, url, type } = useLocalSearchParams<{
+  const { name, url, type} = useLocalSearchParams<{
     name: string;
     url: string;
     type: "movie" | "shows";
   }>();
+  console.log(type);
+  
   const rename = name?.split(" ").concat("Extra").join("");
   const urlNew = new URL(url!);
   urlNew.searchParams.delete("page");
@@ -60,20 +64,15 @@ const Page = () => {
           paddingTop: insets.top,
         }}
       >
-        {isLoading ? (
-          <View style={{ paddingTop: insets.top + 30 }}>
-            <ListViewLoader />
-          </View>
-        ) : (
-          <FlashListColumn
-            data={data?.pages.flatMap((page) => page.results)}
-            handleEndReached={handleEndReached}
-            type={type!}
-          />
-        )}
+        <ViewsWithLoader
+          isLoading={isLoading}
+          Loader={ListViewLoader}
+          data={data?.pages.flatMap((page) => page.results) || []}
+          handleEndReached={handleEndReached}
+          type={type!}
+        />
       </View>
     </>
   );
 };
-
 export default Page;

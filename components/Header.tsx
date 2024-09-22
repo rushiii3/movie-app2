@@ -28,7 +28,7 @@ const Header = ({
   const [text, settext] = useState("");
   const handleGenreChange = (genreId: number) => {
     const updatedGenres = genresWithSelection?.map(
-      (genre: { id: number; isSelected: boolean }) => {
+      (genre: { id: number; isSelected: boolean;  name: string }) => {
         if (genre.id === genreId) {
           return {
             ...genre,

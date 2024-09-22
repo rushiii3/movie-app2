@@ -1,8 +1,13 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-const Seasons = ({ data, showid }) => {
+import { Seasons as SeasonsProp } from "@/types";
+interface SeasonsProps {
+  data: SeasonsProp[];
+  showid: number;
+}
+const Seasons: FC<SeasonsProps> = ({ data, showid }) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   const router = useRouter();
   return (
@@ -84,7 +89,7 @@ const Seasons = ({ data, showid }) => {
             </View>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );

@@ -3,6 +3,7 @@ import ShowScreen from "@/components/Screens/ShowScreen";
 import { withLoader } from "@/HOC/withLoader";
 import useFetch from "@/hooks/useFetch";
 import useBookmarkStore from "@/store/useBookmarkStore";
+import { Genre, TrailersResult } from "@/types";
 import { useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo } from "react";
 
@@ -33,43 +34,33 @@ const Page = () => {
     }
   );
 
-
-  const handleBookmark = useCallback(() => {
-    const Bookmarks = {
-      id: showid,
-      poster_path: showdata?.poster_path,
-      type: "show",
-    };
-    addBookmark(Bookmarks);
-  }, [showid]);
-
   const checkBookmark = useMemo(
-    () => bookmarks?.find((b) => b?.id === showid),
-    [bookmarks]
+    () => bookmarks?.find((b: Genre) => Number(b.id) === Number(showid)),
+    [bookmarks, showid]
   );
+  
   const teasersData = useMemo(
     () =>
       teasers?.results.filter(
-        (value) => value?.type === "Teaser" || value?.type === "Trailer"
+        (value: TrailersResult) =>
+          value?.type === "Teaser" || value?.type === "Trailer"
       ),
     [showid]
   );
-  console.log("loadeddd");
-  
   return (
     <ShowScreenWithLoader
       Loader={MovieLoader}
       isLoading={
         showLoading || castLoading || teaserLoading || recommendationsLoading
       }
-      handleBookmark={handleBookmark}
+      addBookmark={addBookmark}
       checkBookmark={checkBookmark}
       teasersData={teasersData}
       recommendations={recommendations}
       cast={cast}
       showdata={showdata}
       removeBookmark={removeBookmark}
-      showid={showid}
+      showid={Number(showid)}
     />
   );
 };

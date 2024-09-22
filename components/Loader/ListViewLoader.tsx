@@ -1,10 +1,10 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 
 const ListViewLoader = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {[...Array(6)].map((_, index) => (
         <ShimmerPlaceHolder
           key={index}
@@ -14,7 +14,7 @@ const ListViewLoader = () => {
           style={styles.imageShimmer}
         />
       ))}
-    </View>
+    </SafeAreaView>
   );
 };
 

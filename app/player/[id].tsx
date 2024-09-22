@@ -1,10 +1,5 @@
-import React, {useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  StatusBar,
-  Dimensions,
-} from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, StyleSheet, StatusBar } from "react-native";
 
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -19,25 +14,28 @@ const Page = () => {
     }
     setOrientation();
   }, []);
-  const router = useRouter(); 
-   const { id, backdrop, type } = useLocalSearchParams();
-   console.log(id);
-   return (
+
+  const router = useRouter();
+  const { id, backdrop, type } = useLocalSearchParams();
+  const PlayBackUrl = `https://vidsrc.cc/v2/embed/${type}/${id}`;
+  return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-
       <WebView
-      style={styles.container}
-      originWhitelist={['*']}
-      source={{ uri: `https://vidsrc.cc/v2/embed/${type}/${id}` }}
-      allowsFullscreenVideo={true}
-      startInLoadingState={true}
-      allowsInlineMediaPlayback={true}
-      allowsPictureInPictureMediaPlayback={true}
-      allowsAirPlayForMediaPlayback={true}
-      allowsBackForwardNavigationGestures={true}
-      onTouchCancel={() => {router.back()}}
-    />
+        style={styles.container}
+        originWhitelist={["*"]}
+        source={{ uri: PlayBackUrl}}
+        allowsFullscreenVideo={true}
+        startInLoadingState={true}
+        allowsInlineMediaPlayback={true}
+        allowsPictureInPictureMediaPlayback={true}
+        allowsAirPlayForMediaPlayback={true}
+        allowsBackForwardNavigationGestures={true}
+        onTouchCancel={() => {
+          router.back();
+        }}
+        javaScriptCanOpenWindowsAutomatically={false}
+      />
     </View>
   );
 };
@@ -48,6 +46,5 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
 });
-
 
 export default Page;

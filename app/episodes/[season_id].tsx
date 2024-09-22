@@ -33,7 +33,7 @@ const Page = () => {
           isLoading={isLoading}
           data={episodes?.episodes}
           showid={showid}
-          season_id={season_id}
+          season_id={Number(season_id)}
         />
       </View>
     </>

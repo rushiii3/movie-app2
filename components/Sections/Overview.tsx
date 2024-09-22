@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React, { memo } from "react";
 
-const Overview = ({ data }) => {
+const Overview = ({ data }: { data: string }) => {
   return (
     data && (
       <View style={{ marginVertical: 15, gap: 15 }}>

@@ -1,23 +1,35 @@
 import { View, Text } from "react-native";
-import React, { memo } from "react";
-const convertMinutesToHoursAndMinutes = (totalMinutes) => {
+import React, { FC, memo } from "react";
+import { Spokenlanguage } from "@/types";
+const convertMinutesToHoursAndMinutes = (totalMinutes: number) => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
   const formattedTime = hours > 0 ? `${hours}h${minutes}m` : `${minutes}m`;
   return formattedTime;
 };
-const convertArrayofLanguagesToString = (languages) => {
+const convertArrayofLanguagesToString = (languages: Spokenlanguage[]) => {
   const array_of_languages = languages?.map((value) => value?.name);
   return array_of_languages?.join(", ");
 };
-const formatDate = (dateString) => {
+const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const day = date.getDate().toString().padStart(2, "0");
   const month = date.toLocaleString("default", { month: "short" });
   const year = date.getFullYear();
   return `${day} ${month} ${year}`;
 };
-const ShortInfo = ({ duration, status, languages, release_date }) => {
+interface ShortInfoProps {
+  duration: number | undefined;
+  status: string | undefined;
+  languages: Spokenlanguage[];
+  release_date: string;
+}
+const ShortInfo: FC<ShortInfoProps> = ({
+  duration,
+  status,
+  languages,
+  release_date,
+}) => {
   return (
     <View
       style={{

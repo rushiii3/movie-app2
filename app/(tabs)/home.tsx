@@ -11,6 +11,7 @@ const index = () => {
     "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
     "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
     "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
+    "https://api.themoviedb.org/3/trending/all/day?language=en-US",
   ];
 
   const { data: nowPlayingMovies, isLoading: nowPlayingMoviesLoading } =
@@ -34,13 +35,14 @@ const index = () => {
     endpoint: urls[5],
     key: "topRatedShows",
   });
+  const { data: trendings, isLoading: trendingLoading } = useFetch({ endpoint: urls[6], key: "trendings" });
   const Loading =
     nowPlayingMoviesLoading ||
     nowPlayingShowsLoading ||
     popularMoviesLoading ||
     popularShowsLoading ||
     topRatedMoviesLoading ||
-    topRatedShowsLoading;
+    topRatedShowsLoading || trendingLoading;
   return (
     <HomeWithLoader
       isLoading={Loading}
@@ -52,6 +54,7 @@ const index = () => {
       popularShows={popularShows}
       topRatedMovies={topRatedMovies}
       topRatedShows={topRatedShows}
+      trendings={trendings}
     />
   );
 };

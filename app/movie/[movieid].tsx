@@ -8,7 +8,7 @@ const MovieScreenwithLoader = withLoader(MovieScreen);
 import { type ErrorBoundaryProps } from "expo-router";
 import { View, Text } from "react-native";
 import MovieLoader from "@/components/Loader/MovieLoader";
-import { Trailers, TrailersResult } from "@/types";
+import { Genre, TrailersResult } from "@/types";
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
@@ -42,18 +42,20 @@ const Page = () => {
       key: movieid + "recommendations",
     }
   );
+
   const checkBookmark = useMemo(
-    () => bookmarks?.find((b) => b?.id === movieid),
-    [bookmarks]
+    () => bookmarks?.find((b: Genre) => Number(b.id) === Number(movieid)),
+    [bookmarks, movieid]
   );
-  const teasersData = useMemo(
-    () =>
-      teasers?.results.filter(
+
+  const teasersData = useMemo(() => {
+    return (
+      teasers?.results?.filter(
         (value: TrailersResult) =>
           value?.type === "Teaser" || value?.type === "Trailer"
-      ),
-    [movieid]
-  );
+      ) || []
+    );
+  }, [teasers?.results, movieid]); // Add proper dependency
   const isLoading = useMemo(
     () =>
       movieLoading || castLoading || teaserLoading || recommendationsLoading,
@@ -67,7 +69,7 @@ const Page = () => {
       recommendations={recommendations}
       cast={cast}
       teasersData={teasersData}
-      movieid={movieid}
+      movieid={Number(movieid)}
       checkBookmark={checkBookmark}
       addBookmark={addBookmark}
       removeBookmark={removeBookmark}

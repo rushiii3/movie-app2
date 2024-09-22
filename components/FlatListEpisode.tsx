@@ -16,88 +16,108 @@ interface SeasonProps {
   season_id: number;
   showid: string;
 }
+
 const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   const router = useRouter();
-  const render = useCallback(
-    ({ item }: ListRenderItemInfo<Season>) => {
-      return (
-        <View style={styles.productCard}>
-          <Image
-            source={{
-              uri: item.still_path
-                ? `https://image.tmdb.org/t/p/w1280${item.still_path}`
-                : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
+  const EpisodeItem = React.memo(
+    ({
+      item,
+      showid,
+      season_id,
+      router,
+    }: {
+      item: Season;
+      showid: string;
+      season_id: number;
+      router: any;
+    }) => (
+      <View style={styles.productCard}>
+        <Image
+          source={{
+            uri: item.still_path
+              ? `https://image.tmdb.org/t/p/w1280${item.still_path}`
+              : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
+          }}
+          transition={100}
+          style={styles.productImage}
+          contentFit="cover"
+          cachePolicy={"memory-disk"}
+          placeholder={blurhash}
+          placeholderContentFit="cover"
+        />
+
+        <View style={styles.productInfo}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 5,
+              alignItems: "center",
             }}
-            transition={100}
-            style={styles.productImage}
-            contentFit="cover"
-            cachePolicy={"memory-disk"}
-            placeholder={blurhash}
-            placeholderContentFit="cover"
-          />
-
-          <View style={styles.productInfo}>
-            <View
+          >
+            <Text
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: 5,
-                alignItems: "center",
+                fontSize: 12,
+                fontWeight: "400",
+                marginBottom: 4,
+                color: "white",
               }}
             >
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  marginBottom: 4,
-                  color: "white",
-                }}
-              >
-                Episode {item?.episode_number}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  marginBottom: 4,
-                  color: "#4caf50",
-                }}
-              >
-                {item?.runtime} min
-              </Text>
-            </View>
-
-            <Text style={styles.productName}>{item?.name}</Text>
-            <View
+              Episode {item?.episode_number}
+            </Text>
+            <Text
               style={{
-                marginTop: "auto",
-                flexDirection: "row",
-                gap: 20,
-                justifyContent: "space-between",
-                paddingRight: 15,
+                fontSize: 12,
+                fontWeight: "400",
+                marginBottom: 4,
+                color: "#4caf50",
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  router.push({
-                    pathname: "/player/[id]",
-                    params: {
-                      id: `${showid}?s=${season_id}&e=${item?.episode_number}`,
-                      backdrop: item.still_path,
-                      type: "tv",
-                    },
-                  });
-                }}
-              >
-                <FontAwesome5 name="play" size={18} color="white" />
-              </TouchableOpacity>
-            </View>
+              {item?.runtime} min
+            </Text>
+          </View>
+
+          <Text style={styles.productName}>{item?.name}</Text>
+          <View
+            style={{
+              marginTop: "auto",
+              flexDirection: "row",
+              gap: 20,
+              justifyContent: "space-between",
+              paddingRight: 15,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                router.push({
+                  pathname: "/player/[id]",
+                  params: {
+                    id: `${showid}?s=${season_id}&e=${item?.episode_number}`,
+                    backdrop: item.still_path,
+                    type: "tv",
+                  },
+                });
+              }}
+            >
+              <FontAwesome5 name="play" size={18} color="white" />
+            </TouchableOpacity>
           </View>
         </View>
-      );
-    },
-    [showid, season_id]
+      </View>
+    )
+  );
+
+  const render = useCallback(
+    ({ item }: ListRenderItemInfo<Season>) => (
+      <EpisodeItem
+        item={item}
+        showid={showid}
+        season_id={season_id}
+        router={router}
+      />
+    ),
+    [showid, season_id, router]
   );
 
   return (

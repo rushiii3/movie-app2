@@ -1,14 +1,13 @@
-import React, {useEffect, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import NoInternet from "@/components/NoInternet";
 import NetInfo from "@react-native-community/netinfo";
 
-const NetworkProvider = ({ children }) => {
+const NetworkProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [IsNotConnected, setIsNotConnected] = useState(false);
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-      if (state.isInternetReachable !==null) {
+      if (state.isInternetReachable !== null) {
         const offline = !(state.isConnected && state.isInternetReachable);
-        console.log(offline);
         setIsNotConnected(offline);
       }
     });

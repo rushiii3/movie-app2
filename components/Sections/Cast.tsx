@@ -1,12 +1,15 @@
 import { View, Text, FlatList } from "react-native";
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { Image } from "expo-image";
-const Cast = ({ data }) => {
+import { Cast as CastProp } from "@/types";
+
+interface CastProps {
+  data: CastProp[];
+}
+const Cast: FC<CastProps> = ({ data }) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
-  console.log("render cast");
-  
   return (
-    data.length>0 && (
+    data.length > 0 && (
       <View style={{ marginVertical: 15, gap: 15, flex: 1 }}>
         <Text style={{ color: "white", fontSize: 25, fontWeight: "700" }}>
           Cast
@@ -72,7 +75,6 @@ const Cast = ({ data }) => {
           keyExtractor={(item) =>
             item.id ? item.id.toString() : Math.random().toString()
           } // Ensure unique keys
-          estimatedItemSize={1000}
         />
       </View>
     )

@@ -3,14 +3,18 @@ import React, { useEffect } from "react";
 import { hp } from "../../common/common";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FlashList } from "@shopify/flash-list";
-import SamllCards from "../../components/SamllCards";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import useBookmarkStore from "../../store/useBookmarkStore";
+import Cards from "@/components/Cards";
+import { Bookmark } from "@/types";
+
 const Page = () => {
   const { bookmarks, loadBookmarks } = useBookmarkStore();
   useEffect(() => {
     loadBookmarks();
   }, []);
+  console.log(bookmarks);
+
   const insets = useSafeAreaInsets();
 
   return (
@@ -43,8 +47,14 @@ const Page = () => {
           paddingBottom: insets.bottom + 20,
           paddingTop: 10,
         }}
-        renderItem={({ item, index }) => (
-          <SamllCards item={item} type={item.type} index={index} />
+        renderItem={({ item, index }: ListRenderItemInfo<Bookmark>) => (
+          <Cards
+            type={item.type}
+            index={index}
+            cardType="small"
+            id={item.id}
+            path={item.poster_path}
+          />
         )}
         estimatedItemSize={20}
         ListEmptyComponent={

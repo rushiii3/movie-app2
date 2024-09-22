@@ -1,16 +1,22 @@
 import { View, Text } from "react-native";
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { hp, wp } from "../../common/common";
 import Animated, {
   interpolate,
+  SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
 
-const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
-  console.log("render header");
 
+interface HeaderProps {
+  scrollOffset: SharedValue<number>; // Shared value for reanimated animations
+  backdrop: string;
+  poster: string;
+  isAdult: boolean;
+}
+const Header: FC<HeaderProps> = ({ scrollOffset, backdrop, poster, isAdult }) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   const IMG_HEIGHT = hp(55);
   const imageAnimatedStyle = useAnimatedStyle(() => {
@@ -33,8 +39,6 @@ const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
       ],
     };
   });
-
-  console.log();
   return (
     <View>
       <Animated.Image
@@ -43,12 +47,11 @@ const Header = ({ scrollOffset, backdrop, poster, isAdult }) => {
             ? `https://image.tmdb.org/t/p/w1280${backdrop}`
             : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
         }}
-        transition={1000}
         style={[{ height: hp(55), width: wp(100) }, imageAnimatedStyle]}
-        contentFit="cover"
-        cachePolicy={"memory-disk"}
-        placeholder={blurhash}
-        placeholderContentFit="cover"
+        // contentFit="cover"
+        // cachePolicy={"memory-disk"}
+        // placeholder={blurhash}
+        // placeholderContentFit="cover"
       />
       <LinearGradient
         // Background Linear Gradient
