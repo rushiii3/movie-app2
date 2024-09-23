@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { useRouter } from "expo-router";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Image } from "expo-image";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import {
   View,
   Text,
@@ -32,7 +31,19 @@ const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
       season_id: number;
       router: any;
     }) => (
-      <View style={styles.productCard}>
+      <TouchableOpacity
+        style={styles.productCard}
+        onPress={() => {
+          router.push({
+            pathname: "/player/[id]",
+            params: {
+              id: `${showid}?s=${season_id}&e=${item?.episode_number}`,
+              backdrop: item.still_path,
+              type: "tv",
+            },
+          });
+        }}
+      >
         <Image
           source={{
             uri: item.still_path
@@ -46,7 +57,6 @@ const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
           placeholder={blurhash}
           placeholderContentFit="cover"
         />
-
         <View style={styles.productInfo}>
           <View
             style={{
@@ -79,32 +89,8 @@ const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
           </View>
 
           <Text style={styles.productName}>{item?.name}</Text>
-          <View
-            style={{
-              marginTop: "auto",
-              flexDirection: "row",
-              gap: 20,
-              justifyContent: "space-between",
-              paddingRight: 15,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                router.push({
-                  pathname: "/player/[id]",
-                  params: {
-                    id: `${showid}?s=${season_id}&e=${item?.episode_number}`,
-                    backdrop: item.still_path,
-                    type: "tv",
-                  },
-                });
-              }}
-            >
-              <FontAwesome5 name="play" size={18} color="white" />
-            </TouchableOpacity>
-          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   );
 

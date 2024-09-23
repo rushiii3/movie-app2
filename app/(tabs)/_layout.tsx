@@ -1,6 +1,5 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { BlurView } from "expo-blur";
 import Bookmark from "../../assets/svg/Bookmark";
 import HomeSvg from "../../assets/svg/HomeSvg";
 import MovieSvg from "../../assets/svg/MovieSvg";
@@ -11,16 +10,6 @@ const Page = () => {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "red",
-        tabBarBackground: () => (
-          <BlurView
-            intensity={100}
-            tint={"dark"}
-            style={{
-              flex: 1,
-              backgroundColor: "black",
-            }}
-          />
-        ),
         tabBarStyle: {
           backgroundColor: "black", // Set background color to transparent
           position: "absolute",

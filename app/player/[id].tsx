@@ -1,20 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
-
-import * as ScreenOrientation from "expo-screen-orientation";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import WebView from "react-native-webview";
+import { Image } from "expo-image";
 
 const Page = () => {
-  useEffect(() => {
-    async function setOrientation() {
-      await ScreenOrientation.lockAsync(
-        ScreenOrientation.OrientationLock.LANDSCAPE
-      );
-    }
-    setOrientation();
-  }, []);
-
   const router = useRouter();
   const { id, backdrop, type } = useLocalSearchParams();
   const PlayBackUrl = `https://vidsrc.cc/v2/embed/${type}/${id}`;
@@ -24,7 +14,7 @@ const Page = () => {
       <WebView
         style={styles.container}
         originWhitelist={["*"]}
-        source={{ uri: PlayBackUrl}}
+        source={{ uri: PlayBackUrl }}
         allowsFullscreenVideo={true}
         startInLoadingState={true}
         allowsInlineMediaPlayback={true}

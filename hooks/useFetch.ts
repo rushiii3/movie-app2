@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const useFetch = ({ endpoint, key }) => {
+const useFetch = ({ endpoint, key }:{ endpoint:string, key:string }) => {
   const { data, error, isLoading } = useQuery({
     queryKey: [key],
     queryFn: async () => {
@@ -18,8 +18,6 @@ const useFetch = ({ endpoint, key }) => {
     },
     staleTime: 2 * 60 * 1000,
     // enabled: !!id, // only run the query if movieid exists
-    cacheTime: 10 * 60 * 1000, // keep data in cache for 10 minutes
-
   });
 
   return {

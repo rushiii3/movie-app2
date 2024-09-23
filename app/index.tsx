@@ -15,6 +15,8 @@ import { useRouter } from "expo-router";
 export default function Page() {
   const [assets] = useAssets([require("../assets/images/Netflix_Series.jpeg")]);
   const router = useRouter();
+  console.log(assets);
+  
   return (
     <View style={styles.container}>
       {/* "https://i.pinimg.com/736x/df/b9/cb/dfb9cbff37218eaf4c6959de8803e838.jpg" */}
