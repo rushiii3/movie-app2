@@ -39,7 +39,7 @@ const FlashListColumn: React.FC<FlashListColumnProps> = ({
     <Cards
       type={type}
       index={index}
-      path={item.backdrop_path}
+      path={item.poster_path}
       cardType="small"
       id={item.id}
     />
@@ -80,6 +80,7 @@ const FlashListColumn: React.FC<FlashListColumnProps> = ({
               textAlign: "center",
             }}
           >
+            No match found.
             {/* Uncomment and provide condition */}
             {/* {searchPhrase ? "No movies match your search." : "No movies match the selected genre."} */}
           </Text>
@@ -91,6 +92,7 @@ const FlashListColumn: React.FC<FlashListColumnProps> = ({
               textAlign: "center",
             }}
           >
+            Please try different keywords.
             {/* Uncomment and provide condition */}
             {/* {searchPhrase ? "Please try different keywords." : "Please explore other genres or refine your selection."} */}
           </Text>
