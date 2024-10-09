@@ -37,7 +37,7 @@ const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
           router.push({
             pathname: "/player/[id]",
             params: {
-              id: `${showid}?s=${season_id}&e=${item?.episode_number}`,
+              id: `${showid}/${season_id}/${item?.episode_number}`,
               backdrop: item.still_path,
               type: "tv",
             },
