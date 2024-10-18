@@ -1,13 +1,12 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Image as RNImage } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { hp, wp } from "../common/common";
-import Animated, {
-  FadeInDown,
-  FadeInRight,
-} from "react-native-reanimated";
+import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
+import BackImage from "@/assets/images/back.jpg";
+
 interface CardsProps {
   path: string;
   index: number;
@@ -16,7 +15,6 @@ interface CardsProps {
   cardType: "big" | "small";
 }
 const Cards = ({ path, index, type, id, cardType }: CardsProps) => {
-  const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   const router = useRouter();
 
   return (
@@ -52,7 +50,7 @@ const Cards = ({ path, index, type, id, cardType }: CardsProps) => {
           source={{
             uri: path
               ? `https://image.tmdb.org/t/p/w1280${path}`
-              : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
+              : BackImage,
           }}
           transition={1000}
           style={[
@@ -60,8 +58,9 @@ const Cards = ({ path, index, type, id, cardType }: CardsProps) => {
           ]}
           contentFit="cover"
           cachePolicy={"memory-disk"}
-          placeholder={blurhash}
+          placeholder={BackImage}
           placeholderContentFit="cover"
+          recyclingKey={id.toString()}
         />
       </TouchableOpacity>
     </Animated.View>

@@ -1,4 +1,10 @@
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Image as RNImage,
+} from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { hp, wp } from "../common/common";
 import { LinearGradient } from "expo-linear-gradient";
@@ -8,7 +14,7 @@ import useGenreStore from "../store/useGenre";
 import { useMemo } from "react";
 import { Genre, Trending, TrendingResult } from "@/types";
 import { CarouselRenderItemInfo } from "react-native-reanimated-carousel/lib/typescript/types";
-const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
+import BackImage from "@/assets/images/back.jpg";
 
 interface HorizontalTransactionProps {
   data: Trending;
@@ -41,13 +47,13 @@ const HorizontalTransaction = ({ data }: HorizontalTransactionProps) => {
           source={{
             uri: item?.backdrop_path
               ? `https://www.themoviedb.org/t/p/w1280${item?.backdrop_path}`
-              : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
+              : BackImage,
           }}
           transition={1000}
           style={styles.image}
           contentFit="cover"
           cachePolicy={"memory-disk"}
-          placeholder={blurhash}
+          placeholder={BackImage}
           placeholderContentFit="cover"
         />
         <LinearGradient

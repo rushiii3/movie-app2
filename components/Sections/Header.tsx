@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image as RNImage } from "react-native";
 import React, { FC, memo } from "react";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
@@ -8,7 +8,7 @@ import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-
+import BackImage from "@/assets/images/back.jpg";
 
 interface HeaderProps {
   scrollOffset: SharedValue<number>; // Shared value for reanimated animations
@@ -16,9 +16,14 @@ interface HeaderProps {
   poster: string;
   isAdult: boolean;
 }
-const Header: FC<HeaderProps> = ({ scrollOffset, backdrop, poster, isAdult }) => {
-  const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
+const Header: FC<HeaderProps> = ({
+  scrollOffset,
+  backdrop,
+  poster,
+  isAdult,
+}) => {
   const IMG_HEIGHT = hp(55);
+  const AnimatedImage = Animated.createAnimatedComponent(Image);
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -41,17 +46,17 @@ const Header: FC<HeaderProps> = ({ scrollOffset, backdrop, poster, isAdult }) =>
   });
   return (
     <View>
-      <Animated.Image
+      <AnimatedImage
         source={{
           uri: backdrop
             ? `https://image.tmdb.org/t/p/w1280${backdrop}`
-            : "https://st.depositphotos.com/8521256/54557/v/600/depositphotos_545570114-stock-video-glitch-movie-clapper-icon-black.jpg",
+            : BackImage,
         }}
         style={[{ height: hp(55), width: wp(100) }, imageAnimatedStyle]}
-        // contentFit="cover"
-        // cachePolicy={"memory-disk"}
-        // placeholder={blurhash}
-        // placeholderContentFit="cover"
+        contentFit="cover"
+        cachePolicy={"memory-disk"}
+        placeholder={BackImage}
+        placeholderContentFit="cover"
       />
       <LinearGradient
         // Background Linear Gradient
@@ -87,7 +92,7 @@ const Header: FC<HeaderProps> = ({ scrollOffset, backdrop, poster, isAdult }) =>
         }}
         contentFit="cover"
         cachePolicy={"memory-disk"}
-        placeholder={blurhash}
+        placeholder={BackImage}
         placeholderContentFit="cover"
       />
       {isAdult && (

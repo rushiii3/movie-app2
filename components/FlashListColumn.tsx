@@ -23,7 +23,7 @@ type Data = {
 };
 
 type FlashListColumnProps = {
-  data: Data[];
+  data: any[] | undefined;
   handleEndReached: () => void;
   type: "movie" | "shows";
 };

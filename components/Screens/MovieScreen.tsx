@@ -130,7 +130,7 @@ const MovieScreen = ({
           {/* overview */}
           <Overview data={moviedata?.overview} />
           {/* watch and download now */}
-          <WatchDownload id={movieid} backdrop={moviedata?.backdrop_path} />
+          <WatchDownload id={movieid} />
           {/* cast */}
           <Cast data={cast?.cast} />
           {/* Videos & Trailers */}

@@ -1,13 +1,12 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { FC, memo } from "react";
-import { useRouter } from "expo-router";
 import { hp } from "../../common/common";
+import { useOpenBrowser } from "@/hooks/useOpenBrowser";
 interface WatchDownloadProps {
   id: number;
-  backdrop: string;
 }
-const WatchDownload: FC<WatchDownloadProps> = ({ id, backdrop }) => {
-  const router = useRouter();
+const WatchDownload: FC<WatchDownloadProps> = ({ id }) => {
+  const { openURL } = useOpenBrowser();
   return (
     <View style={{ marginVertical: 15, gap: 15 }}>
       <TouchableOpacity
@@ -19,14 +18,7 @@ const WatchDownload: FC<WatchDownloadProps> = ({ id, backdrop }) => {
           alignItems: "center",
         }}
         onPress={() => {
-          router.push({
-            pathname: "/player/[id]",
-            params: {
-              id: id,
-              backdrop: backdrop,
-              type: "movie",
-            },
-          });
+          openURL("movie", id.toString());
         }}
       >
         <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}>

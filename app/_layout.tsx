@@ -41,10 +41,6 @@ const InitialLayout = () => {
         options={{ headerShown: false, orientation: "portrait_up" }}
       />
       <Stack.Screen
-        name="player/[id]"
-        options={{ headerShown: false, orientation: "landscape" }}
-      />
-      <Stack.Screen
         name="movie/[movieid]"
         options={{
           headerShown: true,
