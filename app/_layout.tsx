@@ -10,7 +10,7 @@ import NetworkProvider from "@/Provider/NetworkProvider";
 
 const queryClient = new QueryClient();
 const InitialLayout = () => {
-  const {setMovieGenre, setShowGenre } = useGenreStore();
+  const { setMovieGenre, setShowGenre } = useGenreStore();
   const router = useRouter();
   const movieGenresResponse = useFetch({
     endpoint: "https://api.themoviedb.org/3/genre/movie/list?language=en",
@@ -34,7 +34,7 @@ const InitialLayout = () => {
     }
   }, [showGenresResponse.data]);
   return (
-    <Stack screenOptions={{animation:"slide_from_right"}}>
+    <Stack screenOptions={{ animation: "slide_from_right" }}>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
         name="(tabs)"
@@ -76,18 +76,22 @@ const InitialLayout = () => {
           },
         }}
       />
+      <Stack.Screen
+        name="player/[id]"
+        options={{ headerShown: false, orientation: "landscape" }}
+      />
     </Stack>
   );
 };
 export function ErrorBoundary({ retry, error }: ErrorBoundaryProps) {
-  return <Error retry={retry} error={error}  />;
+  return <Error retry={retry} error={error} />;
 }
 const PageLayout = () => {
   return (
     <NetworkProvider>
-    <QueryClientProvider client={queryClient}>
-      <InitialLayout />
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <InitialLayout />
+      </QueryClientProvider>
     </NetworkProvider>
   );
 };

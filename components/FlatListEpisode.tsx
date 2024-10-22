@@ -10,7 +10,6 @@ import {
   Dimensions,
 } from "react-native";
 import { Season } from "@/types";
-import { useOpenBrowser } from "@/hooks/useOpenBrowser";
 interface SeasonProps {
   data: Season[];
   season_id: number;
@@ -20,7 +19,6 @@ interface SeasonProps {
 const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   const router = useRouter();
-  const {openURL} = useOpenBrowser();
   const EpisodeItem = React.memo(
     ({
       item,
@@ -36,7 +34,13 @@ const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
       <TouchableOpacity
         style={styles.productCard}
         onPress={() => {
-          openURL("tv",`${showid}/${season_id}/${item?.episode_number}`);
+          router.push({
+            pathname: 'player/[id]',
+            params: {
+              id: `${showid}/${season_id}/${item?.episode_number}`,
+              type: "tv"
+            }
+          })
         }}
       >
         <Image

@@ -18,7 +18,6 @@ const Page = () => {
     id: number;
     type: "movie" | "tv";
   }>();
-  console.log(id, type);
   const { data: showdata, isLoading: showLoading } = useFetch({
     endpoint: `https://api.themoviedb.org/3/${type}/${id}?language=en-US`,
     key: type! + id + "detail",
