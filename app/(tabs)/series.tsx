@@ -42,7 +42,7 @@ const Page = () => {
         Loader={ListViewLoader}
         data={data?.pages.flatMap((page) => page.results)}
         handleEndReached={handleEndReached}
-        type={"shows"}
+        type={"tv"}
       />
     </View>
   );

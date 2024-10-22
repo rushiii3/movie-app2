@@ -20,41 +20,51 @@ import Seasons from "../../components/Sections/Seasons";
 import Bookmark from "../../assets/svg/Bookmark";
 import BookmarkFill from "../../assets/svg/BookmarFill";
 import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/reanimated2/component/ScrollView";
-import { Casts, Recommentations, Shows, TrailersResult } from "@/types";
+import { Casts, Movie, Recommentations, Shows, TrailersResult } from "@/types";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import WatchDownload from "../Sections/WatchDownload";
 
 interface ShowScreenProps {
-  showdata: Shows;
+  data: Shows | Movie;
   recommendations: Recommentations;
   cast: Casts;
   teasersData: TrailersResult[];
-  showid: number;
+  id: number;
   checkBookmark: boolean;
   addBookmark: (bookmark: {
     id: number;
     poster_path: string;
-    type: "movie" | "shows";
+    type: "movie" | "tv";
   }) => void;
-  removeBookmark: (movieid: number) => void;
+  type: "movie" | "tv";
+  removeBookmark: (id: number) => void;
 }
 
-const ShowScreen = ({
+const DetailScreen = ({
   addBookmark,
   checkBookmark,
   teasersData,
   recommendations,
   cast,
-  showdata,
+  data,
   removeBookmark,
-  showid,
+  id,
+  type,
 }: ShowScreenProps) => {
+  const tabbarheight = useBottomTabBarHeight();
   const insets = useSafeAreaInsets();
   const scrollViewRef = useAnimatedRef<AnimatedScrollView>();
-  const scrollOffset = useScrollViewOffset(scrollViewRef);  
+  const scrollOffset = useScrollViewOffset(scrollViewRef);
   return (
     <Animated.ScrollView
       style={{ flex: 1, backgroundColor: "black" }}
       ref={scrollViewRef}
       scrollEventThrottle={16}
+      automaticallyAdjustContentInsets={true}
+      contentInsetAdjustmentBehavior="always"
+      contentContainerStyle={{
+        paddingBottom: tabbarheight,
+      }}
     >
       <Stack.Screen
         options={{
@@ -63,12 +73,12 @@ const ShowScreen = ({
               <TouchableOpacity
                 onPress={() => {
                   addBookmark({
-                    id: showid,
-                    poster_path: showdata?.poster_path,
-                    type: "shows",
+                    id: id,
+                    poster_path: data?.poster_path,
+                    type: type,
                   });
                 }}
-                style={{ marginRight: "auto" }}
+                style={{ marginLeft: "auto", marginRight: 20 }}
               >
                 <View
                   style={{
@@ -85,8 +95,8 @@ const ShowScreen = ({
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() => removeBookmark(showid)}
-                style={{ marginRight: "auto" }}
+                onPress={() => removeBookmark(id)}
+                style={{ marginLeft: "auto", marginRight: 20 }}
               >
                 <View
                   style={{
@@ -108,29 +118,42 @@ const ShowScreen = ({
       <View style={{ paddingBottom: insets.bottom }}>
         <Header
           scrollOffset={scrollOffset}
-          backdrop={showdata?.backdrop_path}
-          poster={showdata?.poster_path}
-          isAdult={showdata?.adult}
+          backdrop={data?.backdrop_path}
+          poster={data?.poster_path}
+          isAdult={data?.adult}
         />
         <View style={{ marginTop: hp(12), flex: 1, paddingHorizontal: 20 }}>
           {/* title and subtitle */}
           <TitleTagline
-            title={showdata?.name ? showdata?.name : showdata?.original_name}
-            tagline={showdata?.tagline}
+            title={
+              type === "movie"
+                ? (data as Movie)?.title || (data as Movie)?.original_title
+                : (data as Shows)?.name || (data as Shows)?.original_name
+            }
+            tagline={data?.tagline}
           />
           {/* genres */}
-          <Genre data={showdata?.genres} />
+          <Genre data={data?.genres} />
           {/* duration and length */}
           <ShortInfo
-            status={showdata?.status}
-            languages={showdata?.spoken_languages}
-            release_date={showdata?.first_air_date}
-            duration={undefined}
+            languages={data?.spoken_languages}
+            release_date={
+              type === "movie"
+                ? (data as Movie)?.release_date
+                : (data as Shows)?.first_air_date
+            }
+            duration={type === "movie" ? (data as Movie)?.runtime : undefined}
+            status={type === "tv" ? data?.status : undefined}
           />
           {/* overview */}
-          <Overview data={showdata?.overview} />
+          <Overview data={data?.overview} />
+          {/* download */}
+
+          {type === "movie" && <WatchDownload id={id} />}
           {/* Seasons */}
-          <Seasons data={showdata?.seasons} showid={showid} />
+          {type === "tv" && (
+            <Seasons data={(data as Shows)?.seasons} showid={id} />
+          )}
           {/* cast */}
           <Cast data={cast?.cast} />
           {/* Videos & Trailers */}
@@ -143,4 +166,4 @@ const ShowScreen = ({
   );
 };
 
-export default memo(ShowScreen);
+export default memo(DetailScreen);

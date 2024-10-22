@@ -1,4 +1,4 @@
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import {StyleSheet, SafeAreaView } from "react-native";
 import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 

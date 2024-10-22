@@ -51,6 +51,7 @@ const FlatListEpisode = ({ data, season_id, showid }: SeasonProps) => {
           cachePolicy={"memory-disk"}
           placeholder={blurhash}
           placeholderContentFit="cover"
+          recyclingKey={item?.id.toString()}
         />
         <View style={styles.productInfo}>
           <View

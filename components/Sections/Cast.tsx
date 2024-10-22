@@ -9,6 +9,7 @@ interface CastProps {
 const Cast: FC<CastProps> = ({ data }) => {
   const blurhash = "L02rs+WB00of~qM{9F%M~qM{9F%M";
   return (
+    data &&
     data.length > 0 && (
       <View style={{ marginVertical: 15, gap: 15, flex: 1 }}>
         <Text style={{ color: "white", fontSize: 25, fontWeight: "700" }}>

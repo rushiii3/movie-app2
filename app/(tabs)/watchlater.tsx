@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { hp } from "../../common/common";
 import { StatusBar } from "expo-status-bar";

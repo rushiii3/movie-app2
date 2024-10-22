@@ -1,11 +1,14 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import Bookmark from "../../assets/svg/Bookmark";
 import HomeSvg from "../../assets/svg/HomeSvg";
 import MovieSvg from "../../assets/svg/MovieSvg";
 import SeriesSvg from "../../assets/svg/SeriesSvg";
+import { TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const Page = () => {
+  const router = useRouter();
   return (
     <Tabs
       screenOptions={{
@@ -24,8 +27,7 @@ const Page = () => {
       <Tabs.Screen
         name="home"
         options={{
-          title: "Home",
-          headerShown:false,
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <HomeSvg height={size} width={size} color={color} />
           ),
@@ -35,7 +37,7 @@ const Page = () => {
         name="movies"
         options={{
           title: "Movies",
-          headerShown:false,
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MovieSvg height={size} width={size} color={color} />
           ),
@@ -45,7 +47,7 @@ const Page = () => {
         name="series"
         options={{
           title: "Series",
-          headerShown:false,
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <SeriesSvg height={size} width={size} color={color} />
           ),
@@ -55,14 +57,44 @@ const Page = () => {
         name="watchlater"
         options={{
           title: "Watch Later",
-          headerShown:false,
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <Bookmark height={size} width={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="detail/[id]"
+        options={{
+          href: null,
+          headerShown: true,
+          // orientation: "portrait_up",
+          headerTransparent: true,
+          headerTitle: "",
+          // headerBackTitleVisible: false,
+          // headerBackVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={router.back}
+              style={{ marginRight: "auto", marginLeft: 20 }}
+            >
+              <View
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  borderRadius: 50,
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons name="chevron-back" size={24} color="white" />
+              </View>
+            </TouchableOpacity>
           ),
         }}
       />
     </Tabs>
   );
 };
-
 export default Page;

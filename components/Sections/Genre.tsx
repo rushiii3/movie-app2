@@ -7,6 +7,7 @@ interface GenreProps {
 }
 const Genre: FC<GenreProps> = ({ data }) => {
   return (
+    data && 
     data.length > 0 && (
       <View style={{ marginVertical: 15, flex: 1, alignItems: "center" }}>
         <FlatList

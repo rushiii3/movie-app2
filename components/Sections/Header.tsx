@@ -1,4 +1,4 @@
-import { View, Text, Image as RNImage } from "react-native";
+import { View, Text } from "react-native";
 import React, { FC, memo } from "react";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";

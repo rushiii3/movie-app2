@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 import { RecommentationsResult } from "@/types";
 interface RecommendationProps {
   data: RecommentationsResult[];
-  type: "movie" | "shows";
+  type: "movie" | "tv";
 }
 const Recommendation: FC<RecommendationProps> = ({ data, type }) => {
   return (

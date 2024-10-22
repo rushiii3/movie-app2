@@ -13,7 +13,7 @@ const Page = () => {
   const { name, url, type} = useLocalSearchParams<{
     name: string;
     url: string;
-    type: "movie" | "shows";
+    type: "movie" | "tv";
   }>();
   console.log(type);
   

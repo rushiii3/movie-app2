@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Image as RNImage,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { hp, wp } from "../common/common";
@@ -64,16 +63,12 @@ const HorizontalTransaction = ({ data }: HorizontalTransactionProps) => {
         />
         <TouchableOpacity
           style={styles.touchable}
-          onPress={() => {
-            const routePath =
-              item?.media_type === "movie"
-                ? "/movie/[movieid]"
-                : "/shows/[showid]";
+          onPress={() => {               
             router.push({
-              pathname: routePath,
+              pathname: "/detail/[id]",
               params: {
-                movieid: item?.id || "",
-                showid: item?.id || "",
+                id: Number(item?.id),
+                type: item?.media_type 
               },
             });
           }}
@@ -88,7 +83,7 @@ const HorizontalTransaction = ({ data }: HorizontalTransactionProps) => {
     <>
       <View
         style={{
-          marginVertical: 20,
+          marginBottom: 20,
           paddingHorizontal: 15,
           flex: 1,
           flexDirection: "row",

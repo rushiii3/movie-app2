@@ -1,42 +1,59 @@
-import { View, Text } from "react-native";
-import React, { FC, memo, useRef } from "react";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import YoutubePlayer from "react-native-youtube-iframe";
+import {
+  View,
+  Text,
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  ActivityIndicator,
+} from "react-native";
+import React, { FC, memo, useCallback } from "react";
 import { TrailersResult } from "@/types";
+import WebView from "react-native-webview";
+
 interface VideoTrailerProps {
   data: TrailersResult[] | [];
 }
+
 const VideoTrailer: FC<VideoTrailerProps> = ({ data }) => {
-  const playerRef = useRef(null);
-  const render = ({ item }: ListRenderItemInfo<TrailersResult>) => {
+  const screenWidth = Dimensions.get("screen").width;
+  const margin = 12;
+  const cardSize = { width: screenWidth - 24 * 2, height: 220 };
+  const render = useCallback(({ item }: ListRenderItemInfo<TrailersResult>) => {
     return (
       <View
         style={{
-          flex: 1,
-          borderRadius: 15,
+          width: cardSize.width,
+          height: cardSize.height,
+          marginRight: margin,
+          borderRadius: 20,
           overflow: "hidden",
-          marginHorizontal: 10,
         }}
       >
-        {item?.key ? (
-          <YoutubePlayer
-            ref={playerRef}
-            height={220}
-            width={385}
-            videoId={item.key}
-            play={false}
-            onChangeState={(event) => console.log(event)}
-            onReady={() => console.log("ready")}
-            onError={(e) => console.log(e)}
-            onPlaybackQualityChange={(q) => console.log(q)}
-            playbackRate={1}
-          />
-        ) : (
-          <View style={{ height: 220, width: 385 }} />
-        )}
+        <WebView
+          source={{
+            uri: `https://www.youtube.com/embed/${item?.key}?si=${item?.key}`,
+          }}
+          style={{ height: "100%", width: "100%", backgroundColor:"black" }}
+          startInLoadingState={true}
+          renderLoading={() => (
+            <ActivityIndicator
+              color="#3235fd"
+              size="large"
+              style={{
+                position: "absolute",
+                alignItems: "center",
+                justifyContent: "center",
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              }}
+            />
+          )}
+        />
       </View>
     );
-  };
+  },[]);
   return (
     data?.length > 0 && (
       <View style={{ marginVertical: 15, gap: 15, flex: 1 }} id="trailer">
@@ -44,15 +61,18 @@ const VideoTrailer: FC<VideoTrailerProps> = ({ data }) => {
           Trailers
         </Text>
         <View style={{ flex: 1 }}>
-          <FlashList
+          <FlatList
             data={data}
             renderItem={render}
-            estimatedItemSize={1000}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) =>
               item.id ? item.id.toString() : Math.random().toString()
-            } // Ensure unique keys
+            }
+            pagingEnabled={true}
+            snapToAlignment="start"
+            decelerationRate="normal"
+            disableIntervalMomentum
           />
         </View>
       </View>

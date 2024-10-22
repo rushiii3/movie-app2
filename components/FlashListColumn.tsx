@@ -20,12 +20,13 @@ type Data = {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  media_type: "tv" | 'movie'
 };
 
 type FlashListColumnProps = {
   data: any[] | undefined;
   handleEndReached: () => void;
-  type: "movie" | "shows";
+  type: "movie" | "tv" | null;
 };
 
 const FlashListColumn: React.FC<FlashListColumnProps> = ({
@@ -35,15 +36,17 @@ const FlashListColumn: React.FC<FlashListColumnProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<Data>) => (
-    <Cards
-      type={type}
-      index={index}
-      path={item.poster_path}
-      cardType="small"
-      id={item.id}
-    />
-  );
+  const renderItem = ({ item, index }: ListRenderItemInfo<Data>) => {
+    return (
+      <Cards
+        type={type ? type : item?.media_type }
+        index={index}
+        path={item.poster_path}
+        cardType="small"
+        id={item.id}
+      />
+    );
+  };
 
   return (
     <FlashList

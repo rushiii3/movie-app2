@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { ErrorBoundaryProps, Stack, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -39,66 +39,6 @@ const InitialLayout = () => {
       <Stack.Screen
         name="(tabs)"
         options={{ headerShown: false, orientation: "portrait_up" }}
-      />
-      <Stack.Screen
-        name="movie/[movieid]"
-        options={{
-          headerShown: true,
-          orientation: "portrait_up",
-          headerTransparent: true,
-          headerTitle: "",
-          headerBackTitleVisible: false,
-          headerBackVisible: false,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={router.back}
-              style={{ marginRight: "auto" }}
-            >
-              <View
-                style={{
-                  paddingVertical: 10,
-                  paddingHorizontal: 10,
-                  borderRadius: 50,
-                  backgroundColor: "rgba(0,0,0,0.5)",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons name="chevron-back" size={24} color="white" />
-              </View>
-            </TouchableOpacity>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="shows/[showid]"
-        options={{
-          headerShown: true,
-          orientation: "portrait_up",
-          headerTransparent: true,
-          headerTitle: "",
-          headerBackTitleVisible: false,
-          headerBackVisible: false,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={router.back}
-              style={{ marginRight: "auto" }}
-            >
-              <View
-                style={{
-                  paddingVertical: 10,
-                  paddingHorizontal: 10,
-                  borderRadius: 50,
-                  backgroundColor: "rgba(0,0,0,0.5)",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons name="chevron-back" size={24} color="white" />
-              </View>
-            </TouchableOpacity>
-          ),
-        }}
       />
       <Stack.Screen
         name="episodes/[season_id]"

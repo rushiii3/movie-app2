@@ -21,7 +21,7 @@ import {
 } from "@/types";
 interface FeedsProps {
   title: string;
-  type: "movie" | "shows";
+  type: "movie" | "tv";
   data:
     | TopRatedMoviesResult[]
     | TopRatedShowsResult[]

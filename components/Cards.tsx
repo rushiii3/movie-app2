@@ -1,4 +1,4 @@
-import { TouchableOpacity, Image as RNImage } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { hp, wp } from "../common/common";
@@ -10,7 +10,7 @@ import BackImage from "@/assets/images/back.jpg";
 interface CardsProps {
   path: string;
   index: number;
-  type: "movie" | "shows";
+  type: "movie" | "tv";
   id: number;
   cardType: "big" | "small";
 }
@@ -29,21 +29,13 @@ const Cards = ({ path, index, type, id, cardType }: CardsProps) => {
       <TouchableOpacity
         style={[cardType === "big" ? styles.Bigcard : styles.SmallCard]}
         onPress={() => {
-          if (type === "movie") {
-            router.push({
-              pathname: "/movie/[movieid]",
-              params: {
-                movieid: id,
-              },
-            });
-          } else {
-            router.push({
-              pathname: "/shows/[showid]",
-              params: {
-                showid: id,
-              },
-            });
-          }
+          router.push({
+            pathname: "/detail/[id]",
+            params: {
+              id: Number(id),
+              type: type
+            },
+          });
         }}
       >
         <Image
